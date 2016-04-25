@@ -3,7 +3,7 @@
 ## Installation
 
 ``` bash
-  $ [sudo] npm 'https://github.com/bagrounds/serve-express-router'
+  $ npm 'https://github.com/bagrounds/serve-express-router'
 ```
 
 ## Usage
