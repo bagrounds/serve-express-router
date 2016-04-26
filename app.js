@@ -12,7 +12,7 @@
    */
   var http = require('http');
   var express = require('express');
-  var errorHandler = require('errorHandler');
+  var errorHandler = require('errorhandler');
   var typeCheck = require('type-check').typeCheck;
 
   /*****************************************************************************
