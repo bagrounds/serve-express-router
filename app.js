@@ -14,6 +14,7 @@
   var express = require('express');
   var errorHandler = require('errorhandler');
   var typeCheck = require('type-check').typeCheck;
+  var _ = require('lodash');
   var cors = require('cors');
 
   /*****************************************************************************
@@ -26,7 +27,22 @@
    */
   var app = express();
   app.use(errorHandler());
-  app.use(cors({origin:'*'}));
+
+  function allowCrossDomain(req, res, next) {
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+
+    var origin = req.headers.host;
+
+    res.setHeader('Access-Control-Allow-Origin', origin);
+
+    if (req.method === 'OPTIONS') {
+      res.send(200);
+    } else {
+      next();
+    }
+  }
+
+  app.use(allowCrossDomain);
 
   /*****************************************************************************
    * configure http server
