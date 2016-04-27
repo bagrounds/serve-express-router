@@ -33,7 +33,7 @@
 
     var origin = req.headers.host;
 
-    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Origin', 'http://' + origin);
 
     if (req.method === 'OPTIONS') {
       res.send(200);
