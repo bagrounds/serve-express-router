@@ -14,6 +14,7 @@
   var express = require('express');
   var errorHandler = require('errorhandler');
   var typeCheck = require('type-check').typeCheck;
+  var cors = require('cors');
 
   /*****************************************************************************
    * public API
@@ -25,6 +26,7 @@
    */
   var app = express();
   app.use(errorHandler());
+  app.use(cors());
 
   /*****************************************************************************
    * configure http server
