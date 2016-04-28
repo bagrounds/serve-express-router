@@ -1,9 +1,14 @@
 {
   "name": "serve-express-router",
   "version": "0.1.0",
+  "main": "app.js",
   "private": true,
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brentertz/scapegoat.git"
   },
   "dependencies": {
     "cors": "^2.7.1",
