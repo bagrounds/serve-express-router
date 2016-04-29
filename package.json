@@ -1,5 +1,4 @@
 {
-  "_id": "serve-express-router",
   "name": "serve-express-router",
   "version": "0.1.0",
   "main": "app.js",
