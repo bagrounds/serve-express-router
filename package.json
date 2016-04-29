@@ -1,4 +1,5 @@
 {
+  "_id": "serve-express-router",
   "name": "serve-express-router",
   "version": "0.1.0",
   "main": "app.js",
@@ -22,5 +23,20 @@
     "mocha": "^2.4.5",
     "portfinder": "^1.0.3",
     "request": "^2.72.0"
-  }
+  },
+  "description": "## Installation",
+  "bugs": {
+    "url": "https://github.com/bagrounds/serve-express-router/issues"
+  },
+  "homepage": "https://github.com/bagrounds/serve-express-router#readme",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "serve",
+    "express",
+    "router"
+  ],
+  "author": "bagrounds@gmail.com",
+  "license": "ISC"
 }
