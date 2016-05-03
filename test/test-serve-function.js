@@ -6,7 +6,7 @@
 
     describe('app', function() {
 
-        var serve = require('../app');
+        var serve = require('../serve-function');
         var express = require('express');
         var portFinder = require('portfinder');
         var request = require('request');

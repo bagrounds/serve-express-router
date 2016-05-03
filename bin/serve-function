@@ -1,0 +1,53 @@
+#!/usr/bin/env node
+;(function(){
+
+    var ArgumentParser = require('argparse').ArgumentParser;
+
+    var serve = require('../serve-function');
+
+    var pkg = require('../package');
+
+    var parser = new ArgumentParser({
+        version: pkg.version,
+        addHelp: true,
+        description: pkg.name
+    });
+
+    parser.addArgument(
+        ['-p','--port'],
+        {
+            help: 'port number to host function on'
+        }
+    );
+    parser.addArgument(
+        ['-e','--endpoint'],
+        {
+            help: 'endpoint to host function on'
+        }
+    );
+    parser.addArgument(
+        ['-f','--function'],
+        {
+            help: 'function to host'
+        }
+    );
+    parser.addArgument(
+        ['-a','--arguments'],
+        {
+            help: 'function arguments'
+        }
+    );
+
+    var options = parser.parseArgs();
+
+    options.function = require(options.function);
+    options.arguments = options.arguments.split(',');
+
+    serve(options,function(error,data){
+        error && console.log(error);
+        console.log(data);
+    });
+
+    console.log(options);
+
+})();

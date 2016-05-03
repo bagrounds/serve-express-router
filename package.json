@@ -11,6 +11,7 @@
     "url": "git://github.com/bagrounds/serve-express-router.git"
   },
   "dependencies": {
+    "argparse": "^1.0.7",
     "cors": "^2.7.1",
     "errorhandler": "^1.4.3",
     "express": "~4.13.1",
