@@ -1,5 +1,7 @@
 # serve-function
 
+Serve a function as a REST API.
+
 ## Installation
 
 ``` bash
@@ -10,7 +12,7 @@
 The `serve-function` module has a simple interface:
 
 ``` js
-  var serve = require('serve-express-router');
+  var serve = require('serve-function');
   var express = require('express');
   var router = express.Router();
 
