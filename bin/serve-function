@@ -32,16 +32,16 @@
         }
     );
     parser.addArgument(
-        ['-a','--arguments'],
+        ['-a','--parameters'],
         {
-            help: 'function arguments'
+            help: 'function parameters'
         }
     );
 
     var options = parser.parseArgs();
 
     options.function = require(options.function);
-    options.arguments = options.arguments.split(',');
+    options.parameters = options.parameters.split(',');
 
     serve(options,function(error,data){
         error && console.log(error);
