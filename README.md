@@ -26,7 +26,7 @@ The `serve-function` module has a simple interface:
   serve({
     port: PORT,
     endpoint: '/hello/world',
-    function: functionToserve,
+    function: functionToServe,
     parameters: ['a','b','c']
   });
 

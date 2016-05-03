@@ -15,7 +15,7 @@
             this.timeout(10000);
             portFinder.getPort(function test(error,port){
 
-                var functionToserve = function(options,callback){
+                var functionToServe = function(options,callback){
                     var result = options.a + options.b + options.c;
                     callback(null,result);
                 };
@@ -23,7 +23,7 @@
                 var options = {
                     port: port,
                     endpoint: '/hello/world',
-                    function: functionToserve,
+                    function: functionToServe,
                     parameters: ['a','b','c']
                 };
 
