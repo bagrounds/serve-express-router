@@ -47,9 +47,7 @@
                 request(url,function(error,response,body){
                     body = JSON.parse(body);
 
-                    chai.expect(body.error).to.not.be.ok;
-
-                    chai.expect(body.data).to.equal(expectedResponse);
+                    chai.expect(body).to.equal(expectedResponse);
                     done();
                 });
             });
