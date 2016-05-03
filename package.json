@@ -1,5 +1,5 @@
 {
-  "name": "serve-express-router",
+  "name": "serve-function",
   "version": "0.1.0",
   "main": "app.js",
   "private": true,
@@ -14,8 +14,7 @@
     "cors": "^2.7.1",
     "errorhandler": "^1.4.3",
     "express": "~4.13.1",
-    "lodash": "^4.11.1",
-    "type-check": "^0.3.2"
+    "lodash": "^4.11.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",

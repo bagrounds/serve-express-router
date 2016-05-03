@@ -1,26 +1,35 @@
-# serve-express-router
+# serve-function
 
 ## Installation
 
 ``` bash
-  $ npm install 'https://github.com/bagrounds/serve-express-router'
+  $ npm install 'github:bagrounds/serve-function'
 ```
 
 ## Usage
-The `serve-express-router` module has a simple interface:
+The `serve-function` module has a simple interface:
 
 ``` js
   var serve = require('serve-express-router');
   var express = require('express');
   var router = express.Router();
 
-  // ...
-  // configure router
-  // ...
+  function functionToServe(options,callback){
+    var result = options.a + options.b + options.c;
+      callback(null,result);
+  };
 
   var PORT = 9876;
 
-  serve(PORT, router);
+  serve({
+    port: PORT,
+    endpoint: '/hello/world',
+    function: functionToserve,
+    parameters: ['a','b','c']
+  });
+
+  // now use the function with:
+  // http://<host>:9876/hello/world?a='a'&b='b'&c='c'
 
 ```
 

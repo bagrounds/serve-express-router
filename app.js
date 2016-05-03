@@ -13,7 +13,6 @@
   var http = require('http');
   var express = require('express');
   var errorHandler = require('errorhandler');
-  var typeCheck = require('type-check').typeCheck;
   var cors = require('cors');
 
   /*****************************************************************************
@@ -46,24 +45,39 @@
   });
 
   /**
-   * Given a port number and a router, serve the router on port.
+   * Given a function, a list of parameters, a port number, and an endpoint,
+   * serve the function as a REST API on the given port.
    *
-   * @param {Number} port to serve on
-   * @param {Object|Array<Object>} routers as defined by Express
-   * @returns {Object} The Express app
-   */
-  function serve(port,routers){
+   * @param {Object} options
+   * @returns {Object} the Express app serving the function
+     */
+  function serve(options){
+
+    var router = express.Router();
+
+    var endpoint = options.endpoint;
+    var f = options.function;
+    var parameters = options.parameters;
+    var port = options.port;
+
+    // define router
+    router.get(endpoint,function(request,response){
+
+      // get parameters from query and put them in options object
+      var options = parameters.reduce(function(options,parameterName){
+        options[parameterName] = request.query[parameterName];
+        return options;
+      },{});
+
+      // call function with options, return result in http response
+      f(options,function(error,data){
+        response.json({error:error,data:data});
+      });
+    });
 
     app.set('port', port);
 
-    // if routers is an array, serve each router
-    if( typeCheck('Array',routers) ){
-      routers.forEach(function(router){
-        app.use(router);
-      });
-    } else {
-      app.use(routers);
-    }
+    app.use(router);
 
     server.listen(port);
 

@@ -11,23 +11,45 @@
         var portFinder = require('portfinder');
         var request = require('request');
 
-        it('should serve an Express router', function (done) {
+        it('should serve a function as a REST API', function (done) {
+            this.timeout(10000);
             portFinder.getPort(function test(error,port){
-                var randomMessage = "time:" + new Date();
 
-                var router = express.Router();
+                var functionToserve = function(options,callback){
+                    var result = options.a + options.b + options.c;
+                    callback(null,result);
+                };
 
-                router.get('/', function(request,response){
-                    response.send(randomMessage);
-                });
+                var options = {
+                    port: port,
+                    endpoint: '/hello/world',
+                    function: functionToserve,
+                    parameters: ['a','b','c']
+                };
 
-                serve(port,router);
+                serve(options);
+
+                var testA = 'testA';
+                var testB = 'testB';
+                var testC = 'testC';
+
 
                 var url = 'http://localhost:' + port;
 
-                request(url,function(error,response,body){
+                url += options.endpoint;
 
-                    chai.expect(body).to.equal(randomMessage);
+                url += '?a=' + testA;
+                url += '&b=' + testB;
+                url += '&c=' + testC;
+
+                var expectedResponse = testA + testB + testC;
+
+                request(url,function(error,response,body){
+                    body = JSON.parse(body);
+
+                    chai.expect(body.error).to.not.be.ok;
+
+                    chai.expect(body.data).to.equal(expectedResponse);
                     done();
                 });
             });
