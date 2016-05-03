@@ -71,7 +71,11 @@
 
       // call function with options, return result in http response
       f(options,function(error,data){
-        response.json({error:error,data:data});
+        if( error ){
+          response.json(error);
+        } else{
+          response.json(data);
+        }
       });
     });
 
