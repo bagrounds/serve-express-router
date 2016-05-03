@@ -1,14 +1,14 @@
 {
   "name": "serve-function",
   "version": "0.2.0",
-  "main": "app.js",
+  "main": "serve-function.js",
   "private": true,
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "_mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/bagrounds/serve-express-router.git"
+    "url": "git://github.com/bagrounds/serve-function.git"
   },
   "dependencies": {
     "argparse": "^1.0.7",
@@ -23,18 +23,20 @@
     "portfinder": "^1.0.3",
     "request": "^2.72.0"
   },
-  "description": "## Installation",
+  "description": "Serve a function as a REST API",
   "bugs": {
-    "url": "https://github.com/bagrounds/serve-express-router/issues"
+    "url": "https://github.com/bagrounds/serve-function/issues"
   },
-  "homepage": "https://github.com/bagrounds/serve-express-router#readme",
+  "homepage": "https://github.com/bagrounds/serve-function#readme",
   "directories": {
-    "test": "test"
+    "test": "test",
+    "bin": "bin"
   },
   "keywords": [
     "serve",
-    "express",
-    "router"
+    "function",
+    "rest",
+    "api"
   ],
   "author": "bagrounds@gmail.com",
   "license": "ISC"
