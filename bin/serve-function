@@ -43,9 +43,6 @@
 
     serve(options,function(error,data){
         error && console.log(error);
-        console.log(data);
     });
-
-    console.log(options);
 
 })();
