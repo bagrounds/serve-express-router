@@ -11,7 +11,7 @@
         var request = require('request');
 
         it('should serve a function as a REST API', function (done) {
-            this.timeout(1000 * 20);
+            this.timeout(1000 * 40);
 
                 var options = {
                     functionInstallName: 'git+https://bgrounds%40ea.com@stash.ea.com/scm/~bgrounds_ea.com/analytics-data.git',
@@ -22,7 +22,7 @@
                     console.log('serving');
 
                     var url = 'http://localhost:' + data.options.port;
-                    url += '?source=jira&from=2016-01-01&to=2016-01-05';
+                    url += '?source=jira&from=2016-01-01&to=2016-01-02';
 
                     request(url,function(error,response,body){
                         console.log('response');

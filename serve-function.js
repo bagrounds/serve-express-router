@@ -36,10 +36,6 @@
    */
   var server = http.createServer(app);
 
-  server.on('listening', function onListening(){
-    console.log(server.address());
-  });
-
   server.on('request', function onRequest(request){
     var message = '[' + request.ips + '] -> ';
     message += request.method + ' ';
@@ -64,6 +60,7 @@
   function serve(options, callback){
 
     handleOptions(options, function setup(error,handledOptions){
+      console.log('options handled: ' + JSON.stringify(options));
 
       var PORT = handledOptions.port;
 
@@ -85,11 +82,13 @@
 
       app.use(router);
 
-      server.listen(PORT);
+      server.on('listening',function(){
+        console.log(server.address());
 
-      server.on('listen',function(){
         callback(error,{app:app,options:handledOptions});
       });
+
+      server.listen(PORT);
 
     });
 
