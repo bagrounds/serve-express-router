@@ -10,8 +10,11 @@
         var express = require('express');
         var request = require('request');
 
+        var port;
+
+        this.timeout(1000 * 40);
+
         it('should serve a function as a REST API', function (done) {
-            this.timeout(1000 * 40);
 
                 var options = {
                     functionInstallName: 'git+https://bgrounds%40ea.com@stash.ea.com/scm/~bgrounds_ea.com/analytics-data.git',
@@ -20,6 +23,8 @@
 
                 serve(options,function(error,data){
                     console.log('serving');
+
+                    port = data.options.port;
 
                     var url = 'http://localhost:' + data.options.port;
                     url += '?source=jira&from=2016-01-01&to=2016-01-02';
@@ -32,7 +37,6 @@
                         done();
                     });
                 });
-
         });
     });
 })();

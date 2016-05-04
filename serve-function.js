@@ -19,30 +19,12 @@
 
   var exec = require('child_process').exec;
 
+  portFinder.basePort = 43210;
+
   /*****************************************************************************
    * public API
    */
   module.exports = serve;
-
-  /*****************************************************************************
-   * configure Express app
-   */
-  var app = express();
-  app.use(errorHandler());
-  app.use(cors());
-
-  /*****************************************************************************
-   * configure http server
-   */
-  var server = http.createServer(app);
-
-  server.on('request', function onRequest(request){
-    var message = '[' + request.ips + '] -> ';
-    message += request.method + ' ';
-    message += request.url;
-
-    console.log(message);
-  });
 
   /**
    * Given a function, a list of parameters, a port number, and an endpoint,
@@ -58,6 +40,26 @@
    * @returns {Object} the Express app serving the function
    */
   function serve(options, callback){
+
+    /*****************************************************************************
+     * configure Express app
+     */
+    var app = express();
+    app.use(errorHandler());
+    app.use(cors());
+
+    /*****************************************************************************
+     * configure http server
+     */
+    var server = http.createServer(app);
+
+    server.on('request', function onRequest(request){
+      var message = '[' + request.ips + '] -> ';
+      message += request.method + ' ';
+      message += request.url;
+
+      console.log(message);
+    });
 
     handleOptions(options, function setup(error,handledOptions){
       console.log('options handled: ' + JSON.stringify(options));
@@ -107,6 +109,7 @@
 
     if( ! options.port ){
       portFinder.getPort(function(error,port){
+        console.log('new port: ' + port);
 
         options.port = port;
 
