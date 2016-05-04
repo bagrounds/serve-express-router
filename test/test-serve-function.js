@@ -9,6 +9,7 @@
         var serve = require('../serve-function');
         var express = require('express');
         var request = require('request');
+        var path = require('path');
 
         var port;
 
@@ -16,24 +17,26 @@
 
         it('should serve a function as a REST API', function (done) {
 
+            var PORT = 43210;
+
                 var options = {
-                    functionInstallName: 'git+https://bgrounds%40ea.com@stash.ea.com/scm/~bgrounds_ea.com/analytics-data.git',
-                    functionRequireName: 'analytics-data'
+                    functionRequireName: path.resolve(__dirname,'test-function.js'),
+                    port: PORT
                 };
 
                 serve(options,function(error,data){
-                    console.log('serving');
+                    console.log('data: ' + JSON.stringify(data));
 
-                    port = data.options.port;
+                    var url = 'http://localhost:' + PORT;
+                    url += '?a=some&b=Thing&c=Cool';
 
-                    var url = 'http://localhost:' + data.options.port;
-                    url += '?source=jira&from=2016-01-01&to=2016-01-02';
+                    console.log('url: ' + url);
 
                     request(url,function(error,response,body){
-                        console.log('response');
+                        console.log('body: ' + body);
                         body = JSON.parse(body);
 
-                        chai.expect(body.issues).to.be.ok;
+                        chai.expect(body).to.equal('someThingCool');
                         done();
                     });
                 });
