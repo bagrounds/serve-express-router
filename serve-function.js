@@ -87,7 +87,10 @@
 
       server.listen(PORT);
 
-      callback(error,{app:app,options:handledOptions});
+      server.on('listen',function(){
+        callback(error,{app:app,options:handledOptions});
+      });
+
     });
 
     return app;
