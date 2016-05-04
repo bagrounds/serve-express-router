@@ -62,7 +62,6 @@
     });
 
     handleOptions(options, function setup(error,handledOptions){
-      console.log('options handled: ' + JSON.stringify(options));
 
       var PORT = handledOptions.port;
 
@@ -79,7 +78,6 @@
         });
       });
 
-      console.log('set app port to: ' + PORT);
       app.set('port', PORT);
 
       app.use(router);
@@ -109,12 +107,13 @@
 
     if( ! options.port ){
       portFinder.getPort(function(error,port){
-        console.log('new port: ' + port);
 
         options.port = port;
 
         getFunction(options,callback);
       });
+    } else {
+      getFunction(options,callback);
     }
   }
 
