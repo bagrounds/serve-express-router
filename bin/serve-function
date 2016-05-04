@@ -14,6 +14,18 @@
     });
 
     parser.addArgument(
+        ['-fr','--functionRequireName'],
+        {
+            help: 'require(functionRequireName);'
+        }
+    );
+    parser.addArgument(
+        ['-fi','--functionInstallName'],
+        {
+            help: 'npm install functionInstallName --save'
+        }
+    );
+    parser.addArgument(
         ['-p','--port'],
         {
             help: 'port number to host function on'
@@ -25,23 +37,9 @@
             help: 'endpoint to host function on'
         }
     );
-    parser.addArgument(
-        ['-f','--function'],
-        {
-            help: 'function to host'
-        }
-    );
-    parser.addArgument(
-        ['-a','--parameters'],
-        {
-            help: 'function parameters'
-        }
-    );
+
 
     var options = parser.parseArgs();
-
-    options.function = require(options.function);
-    options.parameters = options.parameters.split(',');
 
     serve(options,function(error,data){
         error && console.log(error);

@@ -11,9 +11,14 @@
    * imports
    */
   var http = require('http');
+  var path = require('path');
   var express = require('express');
+  var portFinder = require('portfinder');
   var errorHandler = require('errorhandler');
   var cors = require('cors');
+  var npmi = require('npmi');
+
+  var exec = require('child_process').exec;
 
   /*****************************************************************************
    * public API
@@ -48,44 +53,78 @@
    * Given a function, a list of parameters, a port number, and an endpoint,
    * serve the function as a REST API on the given port.
    *
-   * @param {Object} options
+   * @param {Object} options - {
+   *  functionInstallName:{String},
+   *  functionRequireName:{String},
+   *  port:{Number|undefined},
+   *  endpoint{String|undefined}
+   * }
+   * @param {Function} callback callback(error,{app:{Object},options:{Object})
    * @returns {Object} the Express app serving the function
-     */
-  function serve(options){
+   */
+  function serve(options, callback){
 
-    var router = express.Router();
+    handleOptions(options, function setup(error,options){
 
-    var endpoint = options.endpoint;
-    var f = options.function;
-    var parameters = options.parameters;
-    var port = options.port;
+      var router = express.Router();
 
-    // define router
-    router.get(endpoint,function(request,response){
+      router.get(options.endpoint,function(request,response){
 
-      // get parameters from query and put them in options object
-      var options = parameters.reduce(function(options,parameterName){
-        options[parameterName] = request.query[parameterName];
-        return options;
-      },{});
-
-      // call function with options, return result in http response
-      f(options,function(error,data){
-        if( error ){
-          response.json(error);
-        } else{
-          response.json(data);
-        }
+        options.function(request.query,function(error,data){
+          if( error ){
+            response.json(error);
+          } else{
+            response.json(data);
+          }
+        });
       });
+
+      app.set('port', options.port);
+
+      app.use(router);
+
+      server.listen(options.port);
+
+      callback(error,{app:app,options:options});
     });
 
-    app.set('port', port);
-
-    app.use(router);
-
-    server.listen(port);
-
     return app;
+  }
+
+  /*****************************************************************************
+   * Define helper functions
+   */
+
+  function handleOptions(options,callback){
+
+    if( ! options.endpoint ){
+      options.endpoint = '/';
+    }
+
+    if( ! options.port ){
+      portFinder.getPort(function(error,port){
+        options.port = port;
+
+        getFunction(options,function(error,result){
+
+          options.function = result;
+
+          callback(error,options);
+        });
+      });
+    }
+  }
+
+  function getFunction(options, callback){
+
+    var command = 'npm install --save ' + options.functionInstallName;
+
+    exec(command, function(error,stdout,stderr) {
+
+      stderr && console.error(stderr);
+
+      callback(error,require(options.functionRequireName));
+    });
   }
 
 })();
