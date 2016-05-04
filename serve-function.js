@@ -105,14 +105,7 @@
 
         options.port = port;
 
-        getFunction(options,function(error,result){
-
-          options.function = result;
-
-          console.log('port and function set: ' + JSON.stringify(options));
-
-          callback(error,options);
-        });
+        getFunction(options,callback);
       });
     }
   }
@@ -127,12 +120,17 @@
 
         stderr && console.error(stderr);
 
-        callback(error,require(options.functionRequireName));
+        options.function = require(options.functionRequireName);
+
+
+        callback(error,options);
       });
 
       // if no install name was supplied, assume require will work
     } else{
-      callback(null,require(options.functionRequireName));
+
+      options.function = require(options.functionRequireName);
+      callback(null,options);
     }
 
   }
