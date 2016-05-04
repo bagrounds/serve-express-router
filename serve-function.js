@@ -119,12 +119,20 @@
 
     var command = 'npm install --save ' + options.functionInstallName;
 
-    exec(command, function(error,stdout,stderr) {
+    // if an install name was supplied, install module now
+    if(options.functionInstallName){
+      exec(command, function(error,stdout,stderr) {
 
-      stderr && console.error(stderr);
+        stderr && console.error(stderr);
 
-      callback(error,require(options.functionRequireName));
-    });
+        callback(error,require(options.functionRequireName));
+      });
+
+      // if no install name was supplied, assume require will work
+    } else{
+      callback(null,require(options.functionRequireName));
+    }
+
   }
 
 })();
