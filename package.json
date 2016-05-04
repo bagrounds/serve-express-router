@@ -11,14 +11,11 @@
     "url": "git://github.com/bagrounds/serve-function.git"
   },
   "dependencies": {
-    "analytics-data": "git+https://bgrounds%40ea.com@stash.ea.com/scm/~bgrounds_ea.com/analytics-data.git",
     "argparse": "^1.0.7",
     "cors": "^2.7.1",
     "errorhandler": "^1.4.3",
     "express": "~4.13.1",
     "lodash": "^4.11.1",
-    "npm": "^3.8.8",
-    "npmi": "^2.0.1",
     "portfinder": "^1.0.3"
   },
   "devDependencies": {

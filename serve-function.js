@@ -105,6 +105,8 @@
       portFinder.getPort(function(error,port){
         options.port = port;
 
+        console.log('setting port: ' + JSON.stringify(options));
+
         getFunction(options,function(error,result){
 
           options.function = result;
