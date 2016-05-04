@@ -11,6 +11,7 @@
     "url": "git://github.com/bagrounds/serve-function.git"
   },
   "dependencies": {
+    "analytics-data": "git+https://bgrounds%40ea.com@stash.ea.com/scm/~bgrounds_ea.com/analytics-data.git",
     "argparse": "^1.0.7",
     "cors": "^2.7.1",
     "errorhandler": "^1.4.3",

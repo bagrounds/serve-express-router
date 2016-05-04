@@ -102,13 +102,14 @@
 
     if( ! options.port ){
       portFinder.getPort(function(error,port){
-        options.port = port;
 
-        console.log('setting port: ' + JSON.stringify(options));
+        options.port = port;
 
         getFunction(options,function(error,result){
 
           options.function = result;
+
+          console.log('port and function set: ' + JSON.stringify(options));
 
           callback(error,options);
         });
