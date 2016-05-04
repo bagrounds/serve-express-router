@@ -16,7 +16,6 @@
   var portFinder = require('portfinder');
   var errorHandler = require('errorhandler');
   var cors = require('cors');
-  var npmi = require('npmi');
 
   var exec = require('child_process').exec;
 
