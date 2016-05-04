@@ -63,13 +63,15 @@
    */
   function serve(options, callback){
 
-    handleOptions(options, function setup(error,options){
+    handleOptions(options, function setup(error,handledOptions){
+
+      var PORT = handledOptions.port;
 
       var router = express.Router();
 
-      router.get(options.endpoint,function(request,response){
+      router.get(handledOptions.endpoint,function(request,response){
 
-        options.function(request.query,function(error,data){
+        handledOptions.function(request.query,function(error,data){
           if( error ){
             response.json(error);
           } else{
@@ -78,13 +80,14 @@
         });
       });
 
-      app.set('port', options.port);
+      console.log('set app port to: ' + PORT);
+      app.set('port', PORT);
 
       app.use(router);
 
-      server.listen(options.port);
+      server.listen(PORT);
 
-      callback(error,{app:app,options:options});
+      callback(error,{app:app,options:handledOptions});
     });
 
     return app;
