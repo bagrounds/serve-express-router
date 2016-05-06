@@ -41,14 +41,14 @@
    */
   function serve(options, callback){
 
-    /*****************************************************************************
+    /***************************************************************************
      * configure Express app
      */
     var app = express();
     app.use(errorHandler());
     app.use(cors());
 
-    /*****************************************************************************
+    /***************************************************************************
      * configure http server
      */
     var server = http.createServer(app);
@@ -71,7 +71,7 @@
 
         handledOptions.function(request.query,function(error,data){
           if( error ){
-            response.json(error);
+            response.status(404).send(error);
           } else{
             response.json(data);
           }
