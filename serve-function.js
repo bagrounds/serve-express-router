@@ -53,14 +53,6 @@
      */
     var server = http.createServer(app);
 
-    server.on('request', function onRequest(request){
-      var message = '[' + request.ips + '] -> ';
-      message += request.method + ' ';
-      message += request.url;
-
-      console.log(message);
-    });
-
     handleOptions(options, function setup(error,handledOptions){
 
       var PORT = handledOptions.port;
@@ -71,7 +63,7 @@
 
         handledOptions.function(request.query,function(error,data){
           if( error ){
-            response.status(404).send(error);
+            response.status(500).send(error.message);
           } else{
             response.json(data);
           }
@@ -86,6 +78,14 @@
         console.log(server.address());
 
         callback(error,{app:app,options:handledOptions});
+      });
+
+      server.on('request', function onRequest(request){
+        var message = '[' + request.ips + '] -> ';
+        message += request.method + ' ';
+        message += request.url;
+
+        console.log(message);
       });
 
       server.listen(PORT);
