@@ -25,15 +25,11 @@
             };
 
             serve(options,function(error,data){
-                console.log('data: ' + JSON.stringify(data));
 
                 var url = 'http://localhost:' + PORT;
                 url += '?a=some&b=Thing&c=Cool';
 
-                console.log('url: ' + url);
-
                 request(url,function(error,response,body){
-                    console.log('body: ' + body);
                     body = JSON.parse(body);
 
                     chai.expect(response.statusCode).to.equal(200);
@@ -54,18 +50,12 @@
             };
 
             serve(options,function(error,data){
-                console.log('data: ' + JSON.stringify(data));
 
                 var url = 'http://localhost:' + PORT;
                 url += '?shouldFail=true';
 
-                console.log('url: ' + url);
-
                 request(url,function(error,response,body){
-                    console.log("e: " + error);
-                    console.log('body: ' + body);
 
-                    console.log(response.statusCode);
                     chai.expect(response.statusCode).to.not.equal(200);
                     done();
                 });
