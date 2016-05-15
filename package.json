@@ -33,7 +33,8 @@
     "istanbul": "^0.4.3",
     "jsdoc": "^3.4.0",
     "mocha": "^2.4.5",
-    "mocha-lcov-reporter": "^1.2.0"
+    "mocha-lcov-reporter": "^1.2.0",
+    "request": "^2.72.0"
   },
   "description": "Serve a function as a REST API",
   "bugs": {
