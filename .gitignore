@@ -1,3 +1,12 @@
-node_modules
+# IntelliJ project files are developer specific
 .idea
 *.iml
+
+# nodejs modules should be installed locally with npm install
+node_modules
+
+coverage
+
+docs
+
+
