@@ -62,6 +62,7 @@
       router.get(handledOptions.endpoint,function(request,response){
 
         handledOptions.function(request.query,function(error,data){
+
           if( error ){
             response.status(500).send(error.message);
           } else{

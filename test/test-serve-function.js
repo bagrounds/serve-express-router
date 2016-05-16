@@ -30,6 +30,7 @@
                 url += '?a=some&b=Thing&c=Cool';
 
                 request(url,function(error,response,body){
+
                     body = JSON.parse(body);
 
                     chai.expect(response.statusCode).to.equal(200);
