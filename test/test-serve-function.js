@@ -1,66 +1,150 @@
+;(function () {
+  /* global describe, it */
+  "use strict";
 
-;(function(){
-    "use strict";
+  var chai = require("chai");
 
-    var chai = require("chai");
+  var serve = require('../serve-function');
+  var express = require('express');
+  var request = require('request');
+  var path = require('path');
 
-    describe('app', function() {
+  var lomath = require('lomath');
 
-        var serve = require('../serve-function');
-        var express = require('express');
-        var request = require('request');
-        var path = require('path');
+  var _ = require('lodash');
 
-        var port;
+  var port;
 
-        this.timeout(1000 * 40);
+  describe('app', function () {
 
-        it('should serve a function as a REST API', function (done) {
+    this.timeout(1000 * 40);
 
-            var PORT = 43210;
+    describe('get', function () {
 
-            var options = {
-                functionRequireName: path.resolve(__dirname,'test-function.js'),
-                port: PORT
-            };
+      it('should serve a function as a REST API', function (done) {
 
-            serve(options,function(error,data){
+        var PORT = 43210;
 
-                var url = 'http://localhost:' + PORT;
-                url += '?a=some&b=Thing&c=Cool';
+        var options = {
+          functionRequireName: path.resolve(__dirname, 'test-function.js'),
+          port: PORT
+        };
 
-                request(url,function(error,response,body){
+        serve(options, function (error, data) {
 
-                    body = JSON.parse(body);
+          var url = 'http://localhost:' + PORT;
+          url += '?a=some&b=Thing&c=Cool';
 
-                    chai.expect(response.statusCode).to.equal(200);
+          request(url, function (error, response, body) {
 
-                    chai.expect(body).to.equal('someThingCool');
-                    done();
-                });
-            });
+            body = JSON.parse(body);
+
+            chai.expect(response.statusCode).to.equal(200);
+
+            chai.expect(body).to.equal('someThingCool');
+            done();
+          });
         });
+      });
 
-        it('should return an error for bad inputs', function (done) {
+      it('should return an error for bad inputs', function (done) {
 
-            var PORT = 12345;
+        var PORT = 12345;
 
-            var options = {
-                functionRequireName: path.resolve(__dirname,'test-function.js'),
-                port: PORT
-            };
+        var options = {
+          functionRequireName: path.resolve(__dirname, 'test-function.js'),
+          port: PORT
+        };
 
-            serve(options,function(error,data){
+        serve(options, function (error, data) {
 
-                var url = 'http://localhost:' + PORT;
-                url += '?shouldFail=true';
+          var url = 'http://localhost:' + PORT;
+          url += '?shouldFail=true';
 
-                request(url,function(error,response,body){
+          request(url, function (error, response, body) {
 
-                    chai.expect(response.statusCode).to.not.equal(200);
-                    done();
-                });
-            });
+            chai.expect(response.statusCode).to.not.equal(200);
+            done();
+          });
         });
+      });
     });
+
+    describe('post', function () {
+
+      it('should handle post data', function (done) {
+
+        var postData = {
+          anObject: {
+            a: 'aa',
+            b: 1,
+            c: [],
+            d: {}
+          },
+          aString: 'string!',
+          aNumber: 5,
+          anArray: [
+            {a:1,b:2},
+            {a:3,b:4}
+          ]
+        };
+
+        var PORT = 9999;
+
+        var options = {
+          functionRequireName: path.resolve(__dirname, 'test-function.js'),
+          port: PORT,
+          verb: 'post',
+          postDataLabel: 'data'
+        };
+
+        console.log('about to serve');
+        serve(options, function (error, data) {
+
+          error && console.error(error);
+          data && console.log('data: ' + JSON.stringify(data));
+
+          var postDataLabel = data.postDataLabel;
+
+          var url = 'http://localhost:' + PORT;
+          url += '?a=some&b=Thing&c=Cool';
+
+          var formData = lomath.flattenJSON(postData);
+
+          console.log('formData: ' + JSON.stringify(formData));
+
+          var requestOptions = {
+            url: url,
+            json: formData
+          };
+
+          request.post(requestOptions, function (error, response, body) {
+
+            body = lomath.unflattenJSON(body);
+
+            error && console.error(error);
+            console.log('response: ' + JSON.stringify(response));
+
+            chai.expect(response.statusCode).to.equal(200);
+
+            var expectedResult = {
+              query: 'someThingCool',
+              data: postData
+            };
+
+            var actualResult = body;
+
+            console.log('actual  : ' + JSON.stringify(actualResult));
+            console.log('expected: ' + JSON.stringify(expectedResult));
+
+            var match = _.isEqual(expectedResult,actualResult);
+
+            chai.expect(match).to.be.true;
+
+            done();
+          });
+        });
+      });
+    });
+  });
 })();

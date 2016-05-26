@@ -1,6 +1,6 @@
 {
   "name": "serve-function",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "main": "serve-function.js",
   "private": false,
   "scripts": {
@@ -19,10 +19,12 @@
   },
   "dependencies": {
     "argparse": "^1.0.7",
+    "body-parser": "^1.15.1",
     "cors": "^2.7.1",
     "errorhandler": "^1.4.3",
     "express": "~4.13.1",
     "lodash": "^4.11.2",
+    "lomath": "^0.3.0",
     "portfinder": "^1.0.3",
     "type-check": "^0.3.2"
   },

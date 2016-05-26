@@ -17,6 +17,12 @@
   var errorHandler = require('errorhandler');
   var cors = require('cors');
 
+  var lomath = require('lomath');
+
+  var _ = require('lodash');
+
+  var bodyParser = require('body-parser');
+
   var exec = require('child_process').exec;
 
   portFinder.basePort = 43210;
@@ -35,8 +41,6 @@
    * @param {String} [options.functionInstallName]
    * @param {Number} [options.port]
    * @param {String} [options.endpoint]
-   * @param {String} [options.verb]
-   * @param {String} [options.postDataLabel]
    *
    * @param {Function} callback handle results
    *
@@ -54,6 +58,11 @@
     app.use(errorHandler());
     app.use(cors());
 
+    app.use(bodyParser.json()); // for parsing application/json
+    app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+
+
     /***************************************************************************
      * configure http server
      */
@@ -65,28 +74,11 @@
 
       var router = express.Router();
 
-      router[verb](handledOptions.endpoint,function(request,response){
-
-        var servedFunctionOptions = request.query;
-
-        if( verb == 'post' ){
-
-          var label = options.postDataLabel || 'data';
-
-          servedFunctionOptions[label] = request.body;
-        }
-
-        handledOptions.function(servedFunctionOptions,function(error,data){
-
-          if( error ){
-
-            response.status(500).send(error.message);
-          } else{
-
-            response.json(data);
-          }
-        });
-      });
+      if( verb == 'post' ){
+        httpPost(router, handledOptions);
+      } else if( verb == 'get' ){
+        httpGet(router, handledOptions);
+      }
 
       app.set('port', PORT);
 
@@ -111,6 +103,50 @@
     });
 
     return app;
+  }
+
+  function httpGet(router, options){
+
+    router.get(options.endpoint,function(request,response){
+
+      options.function(request.query,function(error,data){
+
+        if( error ){
+
+          response.status(500).send(error.message);
+        } else{
+
+          response.json(data);
+        }
+      });
+    });
+  }
+
+  function httpPost(router, options){
+
+    console.log('define post request');
+
+    router.post(options.endpoint ,function(request,response){
+
+      console.log('inside post request definition');
+
+      var functionOptions = request.query;
+
+      functionOptions.data = request.body;
+
+      console.log('function options ' + JSON.stringify(functionOptions));
+
+
+      options.function(functionOptions, function(error, data) {
+
+        console.log('inside httpPost function... data   = ' + JSON.stringify(data));
+        var result = lomath.flattenJSON(data);
+
+        console.log('inside httpPost function... result = ' + JSON.stringify(result));
+        response.json(result);
+
+      });
+    });
   }
 
   /*****************************************************************************
