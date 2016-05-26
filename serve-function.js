@@ -30,14 +30,15 @@
    * Given a function, a list of parameters, a port number, and an endpoint,
    * serve the function as a REST API on the given port.
    *
-   * @param {Object} options - {
-   *  functionInstallName:{String},
-   *  functionRequireName:{String},
-   *  port:{Number|undefined},
-   *  endpoint{String|undefined}
-   * }
-   * @param {Function} callback callback(error,{app:{Object},options:{Object})
-   * @returns {Object} the Express app serving the function
+   * @param {Object} options
+   * @param {String} options.functionRequireName
+   * @param {String} [options.functionInstallName]
+   * @param {Number} [options.port]
+   * @param {String} [options.endpoint]
+   *
+   * @param {Function} callback handle results
+   *
+   * @return {Object} the Express app serving the function
    */
   function serve(options, callback){
 
