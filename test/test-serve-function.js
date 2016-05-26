@@ -89,13 +89,13 @@
           ]
         };
 
+
+
         var PORT = 9999;
 
         var serveOptions = {
           functionRequireName: path.resolve(__dirname, 'test-function.js'),
-          port: PORT,
-          verb: 'post',
-          postDataLabel: 'data'
+          port: PORT
         };
 
         console.log('about to serve');

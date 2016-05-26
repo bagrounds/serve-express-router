@@ -73,12 +73,9 @@
       var PORT = handledOptions.port;
 
       var router = express.Router();
+      httpPost(router, handledOptions);
+      httpGet(router, handledOptions);
 
-      if( verb == 'post' ){
-        httpPost(router, handledOptions);
-      } else if( verb == 'get' ){
-        httpGet(router, handledOptions);
-      }
 
       app.set('port', PORT);
 
