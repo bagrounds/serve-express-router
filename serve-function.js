@@ -35,12 +35,17 @@
    * @param {String} [options.functionInstallName]
    * @param {Number} [options.port]
    * @param {String} [options.endpoint]
+   * @param {String} [options.verb]
+   * @param {String} [options.postDataLabel]
    *
    * @param {Function} callback handle results
    *
    * @return {Object} the Express app serving the function
    */
   function serve(options, callback){
+
+    var verb = options.verb || 'get';
+
 
     /***************************************************************************
      * configure Express app
@@ -60,13 +65,24 @@
 
       var router = express.Router();
 
-      router.get(handledOptions.endpoint,function(request,response){
+      router[verb](handledOptions.endpoint,function(request,response){
 
-        handledOptions.function(request.query,function(error,data){
+        var servedFunctionOptions = request.query;
+
+        if( verb == 'post' ){
+
+          var label = options.postDataLabel || 'data';
+
+          servedFunctionOptions[label] = request.body;
+        }
+
+        handledOptions.function(servedFunctionOptions,function(error,data){
 
           if( error ){
+
             response.status(500).send(error.message);
           } else{
+
             response.json(data);
           }
         });
