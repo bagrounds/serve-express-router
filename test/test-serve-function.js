@@ -25,12 +25,12 @@
 
         var PORT = 43210;
 
-        var options = {
+        var serveOptions = {
           functionRequireName: path.resolve(__dirname, 'test-function.js'),
           port: PORT
         };
 
-        serve(options, function (error, data) {
+        serve(serveOptions, function (error, data) {
 
           var url = 'http://localhost:' + PORT;
           url += '?a=some&b=Thing&c=Cool';
@@ -91,7 +91,7 @@
 
         var PORT = 9999;
 
-        var options = {
+        var serveOptions = {
           functionRequireName: path.resolve(__dirname, 'test-function.js'),
           port: PORT,
           verb: 'post',
@@ -99,7 +99,7 @@
         };
 
         console.log('about to serve');
-        serve(options, function (error, data) {
+        serve(serveOptions, function (error, data) {
 
           error && console.error(error);
           data && console.log('data: ' + JSON.stringify(data));
