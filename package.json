@@ -1,6 +1,6 @@
 {
   "name": "serve-function",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "main": "serve-function.js",
   "private": false,
   "scripts": {

@@ -130,7 +130,7 @@
 
       var functionOptions = request.query;
 
-      functionOptions.data = request.body;
+      functionOptions.data = lomath.flattenJSON(request.body);
 
       //console.log('function options ' + JSON.stringify(functionOptions));
 
@@ -138,10 +138,9 @@
       options.function(functionOptions, function(error, data) {
 
         //console.log('inside httpPost function... data   = ' + JSON.stringify(data));
-        var result = lomath.flattenJSON(data);
 
         //console.log('inside httpPost function... result = ' + JSON.stringify(result));
-        response.json(result);
+        response.json(data);
 
       });
     });

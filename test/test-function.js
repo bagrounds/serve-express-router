@@ -32,11 +32,8 @@
 
     if (options.data) {
 
-      console.log('inbound data: ' + JSON.stringify(options.data));
-      result = {
-        query: result,
-        data: options.data
-      }
+      console.log('inbound data        : ' + JSON.stringify(options.data));
+      result = options.data;
     }
 
     console.log('test function result: ' + JSON.stringify(result));

@@ -126,10 +126,7 @@
 
             chai.expect(response.statusCode).to.equal(200);
 
-            var expectedResult = {
-              query: 'someThingCool',
-              data: postData
-            };
+            var expectedResult = postData
 
             var actualResult = body;
 
