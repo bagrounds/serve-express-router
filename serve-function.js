@@ -130,7 +130,7 @@
 
       var functionOptions = request.query;
 
-      functionOptions.data = lomath.flattenJSON(request.body);
+      functionOptions.data = lomath.unflattenJSON(request.body);
 
       //console.log('function options ' + JSON.stringify(functionOptions));
 
