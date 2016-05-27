@@ -59,7 +59,7 @@
     app.use(cors());
 
     var jsonParser       = bodyParser.json({limit:1024*1024*20, type:'application/json'});
-    var urlencodedParser = bodyParser.urlencoded({ extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoding' })
+    var urlencodedParser = bodyParser.urlencoded({ extended:true,limit:1024*1024*20,type:'application/json' })
 
     app.use(jsonParser);
     app.use(urlencodedParser);
