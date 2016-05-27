@@ -58,10 +58,11 @@
     app.use(errorHandler());
     app.use(cors());
 
-    app.use(bodyParser.json()); // for parsing application/json
-    app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-    app.use(bodyParser({limit: '50mb'}));
+    var jsonParser       = bodyParser.json({limit:1024*1024*20, type:'application/json'});
+    var urlencodedParser = bodyParser.urlencoded({ extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoding' })
 
+    app.use(jsonParser);
+    app.use(urlencodedParser);
 
     /***************************************************************************
      * configure http server
