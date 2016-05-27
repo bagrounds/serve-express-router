@@ -131,15 +131,15 @@
 
       functionOptions.data = request.body;
 
-      console.log('function options ' + JSON.stringify(functionOptions));
+      //console.log('function options ' + JSON.stringify(functionOptions));
 
 
       options.function(functionOptions, function(error, data) {
 
-        console.log('inside httpPost function... data   = ' + JSON.stringify(data));
+        //console.log('inside httpPost function... data   = ' + JSON.stringify(data));
         var result = lomath.flattenJSON(data);
 
-        console.log('inside httpPost function... result = ' + JSON.stringify(result));
+        //console.log('inside httpPost function... result = ' + JSON.stringify(result));
         response.json(result);
 
       });

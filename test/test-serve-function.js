@@ -84,11 +84,10 @@
           aString: 'string!',
           aNumber: 5,
           anArray: [
-            {a:1,b:2},
-            {a:3,b:4}
+            {a: 1, b: 2},
+            {a: 3, b: 4}
           ]
         };
-
 
 
         var PORT = 9999;
@@ -98,20 +97,20 @@
           port: PORT
         };
 
-        console.log('about to serve');
+        //console.log('about to serve');
         serve(serveOptions, function (error, data) {
 
           error && console.error(error);
           data && console.log('data: ' + JSON.stringify(data));
-
-          var postDataLabel = data.postDataLabel;
 
           var url = 'http://localhost:' + PORT;
           url += '?a=some&b=Thing&c=Cool';
 
           var formData = lomath.flattenJSON(postData);
 
-          console.log('formData: ' + JSON.stringify(formData));
+          chai.expect(formData).to.not.deep.equal(postData);
+
+          //console.log('formData: ' + JSON.stringify(formData));
 
           var requestOptions = {
             url: url,
@@ -123,7 +122,7 @@
             body = lomath.unflattenJSON(body);
 
             error && console.error(error);
-            console.log('response: ' + JSON.stringify(response));
+            //console.log('response: ' + JSON.stringify(response));
 
             chai.expect(response.statusCode).to.equal(200);
 
@@ -134,10 +133,10 @@
 
             var actualResult = body;
 
-            console.log('actual  : ' + JSON.stringify(actualResult));
-            console.log('expected: ' + JSON.stringify(expectedResult));
+            //console.log('actual  : ' + JSON.stringify(actualResult));
+            //console.log('expected: ' + JSON.stringify(expectedResult));
 
-            var match = _.isEqual(expectedResult,actualResult);
+            var match = _.isEqual(expectedResult, actualResult);
 
             chai.expect(match).to.be.true;
 
